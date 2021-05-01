@@ -21,7 +21,7 @@
 			<div class="col-lg-4"></div>
 			<div class="col-lg-4">
 				<label for="email_id">Email:</label>
-				<input type="text" class="form-control" id="email_id" placeholder="Enter Email" name="email_id" required>
+				<input type="email" class="form-control" id="email_id" placeholder="Enter Email" name="email_id" required>
 
 			</div>
 			<div class="col-lg-4"></div>

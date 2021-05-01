@@ -65,7 +65,7 @@
 	<div class="row">
 		<div class="col-sm-6">
 			<label for="email_id">Email:</label>
-			<input type="text" class="form-control" id="contact_id" placeholder="Enter Email" name="email_id" required>
+			<input type="email" class="form-control" id="contact_id" placeholder="Enter Email" name="email_id" required>
 		</div>
 		<div class="col-sm-6">
 			<label for="password_id">Password:</label>
