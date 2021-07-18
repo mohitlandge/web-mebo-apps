@@ -12,6 +12,8 @@ use App\Models\Address;
 use App\Models\Contact;
 use DB;
 use Illuminate\Support\Facades\Mail;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\Settings;
 
 
 
@@ -91,11 +93,11 @@ class UserController extends Controller
             if($user){
                 return redirect()->route('login');
             } else {
-               return back()->with('fail', 'something went wrong, try again later');
-           }
+             return back()->with('fail', 'something went wrong, try again later');
+         }
 
 
-       } catch (Exception $e) {
+     } catch (Exception $e) {
         // dd($e);
       //   $data = [
       //     'success' => false,
@@ -209,14 +211,14 @@ public function retrieve_password(Request $request){
             // self::sendMail($email);
         // dd($email);
 
-            $title="Reset password";
-            $message = "This is your new password";
-            $message_data = ["message" => $message, "email"=> $email];
-            Mail::send('welcome', ['title' => $title, 'message_data' => $message_data], function ($message) use($message_data)
-            {
-                $message->from('laraveldeveloper10@gmail.com');
-                $message->to($message_data['email'])->subject('password reset link');
-            });
+        $title="Reset password";
+        $message = "This is your new password";
+        $message_data = ["message" => $message, "email"=> $email];
+        Mail::send('welcome', ['title' => $title, 'message_data' => $message_data], function ($message) use($message_data)
+        {
+            $message->from('laraveldeveloper10@gmail.com');
+            $message->to($message_data['email'])->subject('password reset link');
+        });
         // }catch(Exception $e){
         //     return back()->with('fail', 'There is some problem in sending mail');    
         // }
@@ -240,4 +242,19 @@ public static function randomPassword() {
     }
     return implode($pass); //turn the array into a string
 }
+
+public function convertDocToPDF(){
+
+    // Make sure you have `dompdf/dompdf` in your composer dependencies.
+    Settings::setPdfRendererName(Settings::PDF_RENDERER_DOMPDF);
+// Any writable directory here. It will be ignored.
+    Settings::setPdfRendererPath('.');
+    // dd(storage_path());
+    $file_path =  storage_path().'/test_file.docx';
+    $final_path = storage_path().'/document.pdf';
+
+    $phpWord = IOFactory::load($file_path, 'Word2007');
+    $phpWord->save($final_path, 'PDF');
+}
+
 }
